@@ -16,20 +16,20 @@
 Master
 ```
 
-###### 1. Change Hostname Worker-01 :
+###### Step 1. Change Hostname Worker-01 :
 ```
 # vi /etc/hostsname
 Worker-01
 ```
 
-###### 2. Change Hostname Worker-02 :
+###### Step 2. Change Hostname Worker-02 :
 ```
 # vi /etc/hostsname
 Worker-02
 ```
 
 
-###### 3. Add hosts All Node :
+###### Step 3. Add hosts All Node :
 ```
 # vi /etc/hosts
 
@@ -38,47 +38,47 @@ Worker-02
 192.168.0.103	Worker-02
 
 ```
-###### 4. Restart All Node
+###### Step 4. Restart All Node
 
 ```
 reboot
 ```
 
-###### 5. Update & Upgrade All Node
+###### Step 5. Update & Upgrade All Node
 
 ```
 sudo apt-get update -y && sudo apt-get upgrade -y
 ```
 
-##### 6. install docker version 17.03.2 All Node
+##### Step 6. install docker version 17.03.2 All Node
 ```
 curl https://releases.rancher.com/install-docker/17.03.sh | sh
 ```
 
-##### 8. install docker-compose Node Master
+##### Step 8. install docker-compose Node Master
 ```
 curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 ```
 
-###### 9. configure firewall All Node
+###### Step 9. configure firewall All Node
 ```
 sudo ufw allow 2376/tcp && sudo ufw allow 7946/udp && sudo ufw allow 7946/tcp && sudo ufw allow 80/tcp && sudo ufw allow 2377/tcp && sudo ufw allow 4789/udp
 ```
 
-###### 10. reload the UFW firewall and enable it to start on boot All Node
+###### Step 10. reload the UFW firewall and enable it to start on boot All Node
 ```
 sudo ufw reload && sudo ufw enable
 ```
 
-###### 11. Restart the Docker service to affect the Docker rules
+###### Step 11. Restart the Docker service to affect the Docker rules
 
 ```
 sudo systemctl restart docker
 ```
 
-##### 12. Create Docker Swarm cluster
+##### Step 12. Create Docker Swarm cluster
 ```
 docker swarm init --advertise-addr 192.168.0.103
 ```
@@ -90,7 +90,7 @@ docker swarm join --token SWMTKN-1-5p5f6p6tv1cmjzq9ntx3zmck9kpgt355qq0uaqoj2ple6
 To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 ```
 
-###### 13. Show node
+###### Step 13. Show node
 >docker node ls
 
 ###### output
@@ -99,7 +99,7 @@ ID                            HOSTNAME            STATUS              AVAILABILI
 iwjtf6u951g7rpx6ugkty3ksa *   Master        	  Ready               Active              Leader
 ```
 
-###### 14. Add Worker Node to swarm cluster
+###### Step 14. Add Worker Node to swarm cluster
 ```
 docker swarm join --token SWMTKN-1-5p5f6p6tv1cmjzq9ntx3zmck9kpgt355qq0uaqoj2ple629dl4-5880qso8jio78djpx5mzbqcfu 192.168.0.103:2377
 ```
@@ -108,7 +108,7 @@ docker swarm join --token SWMTKN-1-5p5f6p6tv1cmjzq9ntx3zmck9kpgt355qq0uaqoj2ple6
 This node joined a swarm as a worker.
 ```
 
-###### 15. Run Command 
+###### Step 15. Run Command 
 >Docker node ls
 
 ###### output
@@ -120,11 +120,11 @@ asadjkjqwdojdwqekkkdlkdl2     Worker-02-Node      Ready               Active
 
 ```
 
-###### 16. Test Launch web service in Docker Swarm
+###### Step 16. Test Launch web service in Docker Swarm
 >docker service create --name webserver -p 80:80 httpd
 
 
-###### 17. check the running service
+###### Step 17. check the running service
 >docker service ls
 
 ###### output
@@ -133,10 +133,10 @@ ID                  NAME                MODE                REPLICAS            
 nnt7i1lipo0h        webserver           replicated          0/1                 apache:latest       *:80->80/tcp
 ```
 
-###### 18. Scale the web server service across two containers
+###### Step 18. Scale the web server service across two containers
 >docker service scale webserver=2
 
-###### 19. check the status of web server service
+###### Step 19. check the status of web server service
 >docker service ps webserver
 
 ###### output
